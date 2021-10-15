@@ -8,11 +8,26 @@ int rand_number[4] = {0, 0, 0, 0};
 int guess_number[4] = {0, 0, 0, 0};
 char input_number[5] = {0, 0, 0, 0, 0};
 
-void enter_number(){
+bool enter_number(){
     cin >> input_number;
+    bool error = true;
     for(int i = 0; i < 4; i++){
-        guess_number[i] = (int)input_number[i] - 48;
+        if((int)input_number[i] < 48 || (int)input_number[i] > 58){
+            // Hacer saltar error
+            error = false;
+        }else{
+            guess_number[i] = (int)input_number[i] -48;
+        }
+        // Resta checkear los numeros repetidos:
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                if(i != j && guess_number[i] == guess_number[j]){
+                    error = false;                    
+                }
+            }
+        }
     }
+    return error;
 }
 
 void generate_number(){
@@ -23,6 +38,7 @@ void generate_number(){
         for(int j = 0; j < 4; j++){
             while(rand_number[i] == rand_number[j] && i != j){
                 rand_number[i] = rand() % 10;
+                // n / 10 => R = 0 - 9
             }
         }
     }
@@ -64,10 +80,13 @@ int main(){
 
     cout << "Try to guess the number!" << endl;
     while(!end_game){
+        bool entry = false;
         generate_number();
         err = false;
         while(!err){
-            enter_number();
+            while(!entry){
+                entry = enter_number();
+            }
             compare_numbers();
         }
     }
