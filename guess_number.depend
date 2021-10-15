@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1634267252 source:/home/kali/Desktop/guess_number/main.cpp
+	<iostream>
+
