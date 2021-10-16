@@ -29,7 +29,6 @@ int main(){ // Runs the entry program:
         display_instructions();
         guess_loop();
     }while(!end_game);
-    prompt_reset();
     return 0;
 }
 
@@ -121,6 +120,7 @@ void guess_loop(){ // Executes the main input-hint loop:
         enter_number(); 
         end_loop = compare_numbers(); // Determinates if the loop ends
     }while(!end_loop);
+    prompt_reset();
 }
 
 void prompt_reset(){ // Requests for restart the game with a Y/n question:
@@ -128,21 +128,12 @@ void prompt_reset(){ // Requests for restart the game with a Y/n question:
     cout << "You Win!!!" << endl;
     cout << "Would you want to try again? [Y/n]:" << endl;
     cin >> res;
-    switch (res){
-        case 'Y':
-            end_game = false;
-            break;
-        case 'y':
-            end_game = false;
-            break;
-        case 'N':
-            end_game = true;
-            break;
-        case 'n':
-            end_game = true;
-            break;
-        default:
-            end_game = false;
-            break;
+    if(res == 'Y' || res == 'y'){
+        end_game = false;
+    }
+    if(res == 'N' || res == 'n'){
+        end_game = true;
+    }else{
+        end_game = false;
     }
 }
