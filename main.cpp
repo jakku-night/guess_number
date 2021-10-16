@@ -17,13 +17,12 @@ char input[5] = {0, 0, 0, 0, 0};
 void gen_number();
 void enter_number();
 bool compare_numbers();
-void print_vector(int* vector);
 void guess_loop();
 void display_instructions();
 void prompt_reset();
 
 // Main:
-int main(){
+int main(){ // Runs the entry program:
 
     do{
         gen_number();
@@ -36,7 +35,7 @@ int main(){
 
 // Global Definitions:
 
-void display_instructions(){
+void display_instructions(){ // Displays all the instructions for the program:
     cout << "Try to guess the number!" << endl;
     cout << "Try to guess the number by input a 4-not-repeated digit number." << endl;
     cout << "The program will give you some hints to reach the goal." << endl;
@@ -44,7 +43,7 @@ void display_instructions(){
     cout << "The letter 'B' represents the digits you guessed in the wrong position." << endl;
 }
 
-void gen_number(){
+void gen_number(){ // Generates a random 4-digit non-repeated number:
     // Charges the array with random numbers:
     for(int i = 0; i < 4; i++){
         number[i] = rand() % 10;
@@ -62,23 +61,17 @@ void gen_number(){
     
 }
 
-void print_vector(int* vector, int length){
-    for(int i = 0; i < length; i++){
-        cout << vector[i] << endl;
-    }
-}
-
-void enter_number(){
+void enter_number(){ // Requests and validates a number to the user:
     cout << "Insert your number:" << endl;
     do{
-        err = false;
-        cin >> input;
-        for(int i = 0; i < 4; i++){
+        err = false; // Sets no error state:
+        cin >> input; // Inputs the number as a string:
+        for(int i = 0; i < 4; i++){ // Validates that the input contains only numbers:
             if((int)input[i] < 48 || (int)input[i] > 58){
                 err = true;
             }
         }
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 4; i++){ // Validates that there's not repeated digits:
             for(int j= 0; j < 4; j++){
                 if(i != j){
                     if((int)input[i] == input[j]){
@@ -87,21 +80,22 @@ void enter_number(){
                 }
             }
         }
-        if(err){
+        if(err){ // Throws the issue to the user:
             cout << "Bad input. Try again." << endl;
-        }else{
+        }else{ // Stores thre input as an integer format:
             for (int i = 0; i < 4; i++){
                 input_number[i] = (int)input[i] - 48;
             }
         }
-    }while(err);
+    }while(err); // Repeats the process if error
 }
 
 bool compare_numbers(){
+    // Comparates each element of the prompt number with each element of the generated number:
     for(int i = 0; i < 4; i++){
         for(int j= 0; j < 4; j++){
             if(input_number[i] == number[j]){
-                if(i == j){
+                if(i == j){ // Comparates if the digit position is right or not and storages the count:
                     a++;
                 }else{
                     b++;
@@ -109,26 +103,27 @@ bool compare_numbers(){
             }
         }
     }
+    // Prints the hint for the user:
     cout << "Digits in place: " << a << "A" << endl;
     cout << "Digits in the number: " << b << "B" << endl;
-    if(a < 4){
+    if(a < 4){ // Asks if player won and returns the result:
         return false;
     }else{
         return true;
     }
 }
 
-void guess_loop(){
+void guess_loop(){ // Executes the main input-hint loop:
     bool end_loop = false;
     do{
-        a = 0;
+        a = 0; // Sets the counter to zero on each time
         b = 0;
-        enter_number();
-        end_loop = compare_numbers();
+        enter_number(); 
+        end_loop = compare_numbers(); // Determinates if the loop ends
     }while(!end_loop);
 }
 
-void prompt_reset(){
+void prompt_reset(){ // Requests for restart the game with a Y/n question:
     char res = '0';
     cout << "You Win!!!" << endl;
     cout << "Would you want to try again? [Y/n]:" << endl;
