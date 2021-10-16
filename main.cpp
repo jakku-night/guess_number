@@ -2,6 +2,7 @@
 // Includes:
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -25,6 +26,7 @@ void prompt_reset();
 int main(){ // Runs the entry program:
 
     do{
+        srand(time(NULL));
         gen_number();
         display_instructions();
         guess_loop();
